@@ -1,0 +1,63 @@
+Author: Emanuel Brici
+Email: emanuel.brici@wsu.edu
+
+Program:
+	A MapReduce program in Hadoop that implements an algorithm, 
+	which counts number of common friends for each pair of users.
+
+Input:
+	The input file contains the adjacency list and has multiple 
+	lines in the following	format:
+	
+	<User> <TAB> <Friends>
+
+	<User>	is a unique integer ID	corresponding to a unique user	 
+	and <Friends> is a comma separated list of unique IDs corresponding 
+	to the friends	of the user with the uniqueID <User>.	
+
+Output:
+	The output should contain one line per pair of users in the 
+	following format:
+	
+	<User_U	+ User_V> <TAB> <# of common friends>
+
+	where <User_U> and <User_V> are unique ID corresponding to pair 
+	of users U and V and <# of common friends> is the total number 
+	of common friends.
+
+Build:
+	Java Version: 1.7.0_71
+	Hadoop Version: 2.7.2
+	
+	Move the text file and source code into the hadoop directory.
+	Then put the file of users and friends into the hadoop file
+	system.
+
+	$hdfs dfs -put text.txt 
+	
+	Then compile the source.
+
+	$javac CommonFriends.java -cp $(hadoop classpath)
+
+	After compiling, jar up the compiled files.
+
+	$jar cf cf.jar CommonFriends*.class
+	
+	Now we can run the application on the text.txt file.
+	-Before proceeding start hadoop.
+	 
+	$hdfs jar cf.jar CommonFriends /user/<$USER>/text.txt /user/<$USER>/<output>
+
+	After completion of hadoop running we can view the output 
+	in the file labeled  results.txt.
+
+	$hdfs dfs -cat /user/<$USER>/<output>/part-r-00000 > results.txt
+
+	You have successfully built and ran friendCount.java with hadoop!
+	-Hadoop can be stopped now.
+
+Files:
+CommonFriends.java......MapReduce of CommonFriends 
+text.txt................Input file to run application with
+results.txt.............Output of CommonFriends mMapReduce run on text.txt
+README..................This file
